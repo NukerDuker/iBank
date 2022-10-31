@@ -1,8 +1,8 @@
 package ru.skillfactory.ibankApi.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -28,7 +28,7 @@ public class User {
 
     @NonNull
     @Column(name = "balance")
-    private BigInteger balance;
+    private Long balance;
 
 
 }

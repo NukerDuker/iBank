@@ -17,8 +17,7 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User user = new User("Harry", "Potter", BigInteger.valueOf(98000000));
-
+    private User user = new User("Harry", "Potter",98000000L);
 
     @Test
     void getUserById() {
