@@ -24,7 +24,7 @@ public class UserService {
         return user.get();
     }
 
-    public Long getBalance(Long id) {
+    public Long getUserBalance(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.get().getBalance();
     }
