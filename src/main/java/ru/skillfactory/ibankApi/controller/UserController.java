@@ -32,7 +32,6 @@ public class UserController {
     }
     @PostMapping("/withdrow")
     public ResponseEntity<String> takeMoney(@RequestBody ChangeBalanceRequest spend) {
-        userService.takeMoney((long) spend.getUserId(),(long) spend.getValue());
-        return ResponseEntity.ok("Transaction permitted");
+        return userService.takeMoney((long) spend.getUserId(),(long) spend.getValue());
     }
 }

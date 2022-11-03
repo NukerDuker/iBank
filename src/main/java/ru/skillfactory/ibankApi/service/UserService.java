@@ -2,6 +2,7 @@ package ru.skillfactory.ibankApi.service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.skillfactory.ibankApi.entity.User;
 import ru.skillfactory.ibankApi.repository.UserRepository;
@@ -37,11 +38,14 @@ public class UserService {
         return newBalance;
     }
 
-    public Long takeMoney(Long id, Long spend) {
+    public ResponseEntity<String> takeMoney(Long id, Long spend) {
         Optional<User> user = userRepository.findById(id);
         Long newBalance = user.get().getBalance() - spend;
+        if (newBalance < 0) {
+            return ResponseEntity.of(Optional.of("Not enough money"));
+        }
         user.get().setBalance(newBalance);
         userRepository.save(user.get());
-        return newBalance;
+        return ResponseEntity.ok("Transaction permitted");
     }
 }
