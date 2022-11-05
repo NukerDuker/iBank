@@ -44,18 +44,18 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<String> takeMoney(Long id, Long spend) throws ControllerException {
+    public Response takeMoney(Long id, Long spend) throws ControllerException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             long newBalance = user.get().getBalance() - spend;
             if (newBalance < 0) {
-                return ResponseEntity.of(Optional.of("Not enough money"));
+                return new Response("Not enough money");
             }
             user.get().setBalance(newBalance);
             userRepository.save(user.get());
         } else {
             throw new ControllerException("User not found");
         }
-        return ResponseEntity.ok("Transaction permitted");
+        return new Response("Transaction permitted");
     }
 }
