@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.skillfactory.ibankApi.entity.User;
+import ru.skillfactory.ibankApi.exceptions.ControllerException;
+import ru.skillfactory.ibankApi.exceptions.Response;
 import ru.skillfactory.ibankApi.repository.UserRepository;
 
 import java.util.Optional;
@@ -30,22 +32,30 @@ public class UserService {
         return user.get().getBalance();
     }
 
-    public Long putMoney(Long id, Long income) {
+    public Response putMoney(Long id, Long income) throws ControllerException {
         Optional<User> user = userRepository.findById(id);
-        Long newBalance = user.get().getBalance() + income;
-        user.get().setBalance(newBalance);
-        userRepository.save(user.get());
-        return newBalance;
+        if (user.isPresent()) {
+            Long newBalance = user.get().getBalance() + income;
+            user.get().setBalance(newBalance);
+            userRepository.save(user.get());
+            return new Response("Transaction permitted");
+        } else {
+            throw new ControllerException("User not found");
+        }
     }
 
-    public ResponseEntity<String> takeMoney(Long id, Long spend) {
+    public ResponseEntity<String> takeMoney(Long id, Long spend) throws ControllerException {
         Optional<User> user = userRepository.findById(id);
-        Long newBalance = user.get().getBalance() - spend;
-        if (newBalance < 0) {
-            return ResponseEntity.of(Optional.of("Not enough money"));
+        if (user.isPresent()) {
+            long newBalance = user.get().getBalance() - spend;
+            if (newBalance < 0) {
+                return ResponseEntity.of(Optional.of("Not enough money"));
+            }
+            user.get().setBalance(newBalance);
+            userRepository.save(user.get());
+        } else {
+            throw new ControllerException("User not found");
         }
-        user.get().setBalance(newBalance);
-        userRepository.save(user.get());
         return ResponseEntity.ok("Transaction permitted");
     }
 }

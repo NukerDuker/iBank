@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import ru.skillfactory.ibankApi.entity.User;
+import ru.skillfactory.ibankApi.exceptions.ControllerException;
 
 @Slf4j
 @DataJpaTest
@@ -34,7 +35,7 @@ public class UserServiceTest {
         Assertions.assertEquals(1, userService.getUserBalance(2L).intValue());
     }
     @Test
-    public void moneyOperations() {
+    public void moneyOperations() throws ControllerException {
         userService.putMoney(1L, 1L);
         User user = userService.getUserById(1L);
         Assertions.assertNotEquals(1L, user.getBalance().intValue());

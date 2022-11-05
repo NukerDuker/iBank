@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skillfactory.ibankApi.dto.ChangeBalanceRequest;
 import ru.skillfactory.ibankApi.entity.User;
+import ru.skillfactory.ibankApi.exceptions.ControllerException;
+import ru.skillfactory.ibankApi.exceptions.Response;
 import ru.skillfactory.ibankApi.jsonResponse.BalanceResponseBuilder;
 import ru.skillfactory.ibankApi.service.UserService;
 
@@ -26,12 +28,11 @@ public class UserController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> putMoney(@RequestBody ChangeBalanceRequest income) {
-        userService.putMoney((long) income.getUserId(),(long) income.getValue());
-        return ResponseEntity.ok("Transaction permitted");
+    public Response putMoney(@RequestBody ChangeBalanceRequest income) throws ControllerException {
+        return userService.putMoney((long) income.getUserId(),(long) income.getValue());
     }
     @PostMapping("/withdrow")
-    public ResponseEntity<String> takeMoney(@RequestBody ChangeBalanceRequest spend) {
+    public ResponseEntity<String> takeMoney(@RequestBody ChangeBalanceRequest spend) throws ControllerException {
         return userService.takeMoney((long) spend.getUserId(),(long) spend.getValue());
     }
 }
