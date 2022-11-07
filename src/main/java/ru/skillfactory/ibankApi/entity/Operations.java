@@ -1,0 +1,34 @@
+package ru.skillfactory.ibankApi.entity;
+
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Data
+@Table(name = "operations_tab")
+public class Operations {
+
+    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date date;
+
+    @Column
+    private long userId;
+
+    @Column
+    private long amount;
+
+    @Column
+    private int operationType;
+}

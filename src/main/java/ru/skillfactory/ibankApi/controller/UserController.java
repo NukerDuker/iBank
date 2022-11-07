@@ -31,7 +31,7 @@ public class UserController {
     public Response putMoney(@RequestBody ChangeBalanceRequest income) throws ControllerException {
         return userService.putMoney((long) income.getUserId(),(long) income.getValue());
     }
-    @PostMapping("/withdrow")
+    @PostMapping("/withdrew")
     public Response takeMoney(@RequestBody ChangeBalanceRequest spend) throws ControllerException {
         return userService.takeMoney((long) spend.getUserId(),(long) spend.getValue());
     }

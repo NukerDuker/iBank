@@ -4,7 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,6 +25,10 @@ public class User {
 
     @Column(name = "balance")
     private Long balance;
+
+    @Column
+    @OneToMany(mappedBy = "userId")
+    private Set<Operations> operations;
 
 
 }
