@@ -1,4 +1,4 @@
-package ru.skillfactory.ibankApi.dto;
+package ru.skillfactory.ibankApi.requestModels;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -11,6 +11,8 @@ import ru.skillfactory.ibankApi.exceptions.Response;
 import ru.skillfactory.ibankApi.repository.OperationsRepository;
 import ru.skillfactory.ibankApi.repository.UserRepository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Data
@@ -48,7 +50,11 @@ public class UserService {
             operation.setOperationType(1);
             operation.setAmount(income);
             operationsRepository.save(operation);
-            return new Response("Transaction permitted");
+
+            Map<String, String> message = new HashMap<>();
+            Response response = new Response();
+            message.put("message", "Transaction permitted");
+            return response;
         } else {
             throw new ControllerException("User not found");
         }
@@ -59,7 +65,10 @@ public class UserService {
         if (user.isPresent()) {
             long newBalance = user.get().getBalance() - spend;
             if (newBalance < 0) {
-                return new Response("Not enough money");
+                Map<String, String> message = new HashMap<>();
+                Response response = new Response();
+                message.put("error", "Not enough money");
+                return response;
             }
             user.get().setBalance(newBalance);
             userRepository.save(user.get());
@@ -68,7 +77,10 @@ public class UserService {
             operation.setOperationType(0);
             operation.setAmount(spend);
             operationsRepository.save(operation);
-            return new Response("Transaction permitted");
+            Map<String, String> message = new HashMap<>();
+            Response response = new Response();
+            message.put("message", "Transaction permitted");
+            return response;
         } else {
             throw new ControllerException("User not found");
         }

@@ -1,8 +1,9 @@
-package ru.skillfactory.ibankApi.dto;
+package ru.skillfactory.ibankApi.requestModels;
 
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -12,9 +13,9 @@ public class GetOperationsRequest {
     private long userId;
 
     @Nullable
-    private Optional<String> startDate;
+    private Date startDate;
 
     @Nullable
-    private String endDate;
+    private Date endDate;
 
 }
