@@ -8,5 +8,6 @@ import lombok.Setter;
 public class ChangeBalanceRequest {
 
     private int userId;
+    private int userToId;
     private int value;
 }

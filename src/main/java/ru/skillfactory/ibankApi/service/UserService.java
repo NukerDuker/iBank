@@ -51,11 +51,10 @@ public class UserService {
             operation.setAmount(income);
             operationsRepository.save(operation);
 
-            Map<String, String> message = new HashMap<>();
-            HttpResponse httpResponse = new HttpResponse();
-            httpResponse.setStatus("success");
-            httpResponse.setMessage("Transaction permitted");
-            return httpResponse;
+            HttpResponse response = new HttpResponse();
+            response.setStatus("success");
+            response.setMessage("Transaction permitted");
+            return response;
         } else {
             throw new ControllerException("User not found");
         }
@@ -66,10 +65,10 @@ public class UserService {
         if (user.isPresent()) {
             long newBalance = user.get().getBalance() - spend;
             if (newBalance < 0) {
-                Map<String, String> message = new HashMap<>();
-                HttpResponse httpResponse = new HttpResponse();
-                message.put("error", "Not enough money");
-                return httpResponse;
+                HttpResponse response = new HttpResponse();
+                response.setStatus("error");
+                response.setMessage("Not enough money");
+                return response;
             }
             user.get().setBalance(newBalance);
             userRepository.save(user.get());
@@ -78,12 +77,38 @@ public class UserService {
             operation.setOperationType(0);
             operation.setAmount(spend);
             operationsRepository.save(operation);
-            Map<String, String> message = new HashMap<>();
-            HttpResponse httpResponse = new HttpResponse();
-            message.put("message", "Transaction permitted");
-            return httpResponse;
+            HttpResponse response = new HttpResponse();
+            response.setStatus("success");
+            response.setMessage("Transaction permitted");
+            return response;
         } else {
             throw new ControllerException("User not found");
         }
+    }
+
+    public HttpResponse sendMoney(long fromUserId, long toUserId, long operationAmount) throws ControllerException {
+        boolean checkBalance = false;
+        Optional<User> userFrom = userRepository.findById(fromUserId);
+        if (userFrom.isPresent()) {
+            checkBalance = userFrom.get().getBalance() > operationAmount;
+        } else {
+            HttpResponse response = new HttpResponse();
+            response.setStatus("error");
+            response.setMessage("User not found");
+            return response;
+        }
+        if (checkBalance) {
+            this.takeMoney(fromUserId, operationAmount);
+            this.putMoney(toUserId, operationAmount);
+        } else {
+            HttpResponse httpResponse = new HttpResponse();
+            httpResponse.setStatus("error");
+            httpResponse.setMessage("Not enough money");
+            return httpResponse;
+        }
+        HttpResponse response = new HttpResponse();
+        response.setStatus("success");
+        response.setMessage("Transaction permitted");
+        return response;
     }
 }

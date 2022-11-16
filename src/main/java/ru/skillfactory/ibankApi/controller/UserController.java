@@ -43,4 +43,9 @@ public class UserController {
         log.info(request.toString());
         return operationsService.getOperationList(request);
     }
+
+    @PostMapping("/transferMoney")
+    public HttpResponse transferMoney(@RequestBody ChangeBalanceRequest request) throws ControllerException {
+        return userService.sendMoney(request.getUserId(), request.getUserToId(), request.getValue());
+    }
 }
