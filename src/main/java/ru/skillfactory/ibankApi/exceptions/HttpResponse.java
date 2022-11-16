@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Response {
+public class HttpResponse {
 
-    private Map<String, Object> message;
+    private String status;
+    private Object message;
 }

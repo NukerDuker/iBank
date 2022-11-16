@@ -2,21 +2,22 @@ package ru.skillfactory.ibankApi.service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.skillfactory.ibankApi.entity.Operations;
 import ru.skillfactory.ibankApi.entity.User;
 import ru.skillfactory.ibankApi.exceptions.ControllerException;
-import ru.skillfactory.ibankApi.exceptions.Response;
+import ru.skillfactory.ibankApi.exceptions.HttpResponse;
 import ru.skillfactory.ibankApi.repository.OperationsRepository;
 import ru.skillfactory.ibankApi.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Data
 @Service
+@Transactional(rollbackOn = Exception.class)
 public class UserService {
 
     @Autowired
@@ -38,8 +39,7 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
         return user.get().getBalance();
     }
-
-    public Response putMoney(Long id, Long income) throws ControllerException {
+    public HttpResponse putMoney(Long id, Long income) throws ControllerException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             Long newBalance = user.get().getBalance() + income;
@@ -52,23 +52,24 @@ public class UserService {
             operationsRepository.save(operation);
 
             Map<String, String> message = new HashMap<>();
-            Response response = new Response();
-            message.put("message", "Transaction permitted");
-            return response;
+            HttpResponse httpResponse = new HttpResponse();
+            httpResponse.setStatus("success");
+            httpResponse.setMessage("Transaction permitted");
+            return httpResponse;
         } else {
             throw new ControllerException("User not found");
         }
     }
 
-    public Response takeMoney(Long id, Long spend) throws ControllerException {
+    public HttpResponse takeMoney(Long id, Long spend) throws ControllerException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
             long newBalance = user.get().getBalance() - spend;
             if (newBalance < 0) {
                 Map<String, String> message = new HashMap<>();
-                Response response = new Response();
+                HttpResponse httpResponse = new HttpResponse();
                 message.put("error", "Not enough money");
-                return response;
+                return httpResponse;
             }
             user.get().setBalance(newBalance);
             userRepository.save(user.get());
@@ -78,9 +79,9 @@ public class UserService {
             operation.setAmount(spend);
             operationsRepository.save(operation);
             Map<String, String> message = new HashMap<>();
-            Response response = new Response();
+            HttpResponse httpResponse = new HttpResponse();
             message.put("message", "Transaction permitted");
-            return response;
+            return httpResponse;
         } else {
             throw new ControllerException("User not found");
         }

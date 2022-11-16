@@ -11,9 +11,11 @@ import java.util.Map;
 public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(ControllerException.class)
-    public ResponseEntity<Response> handleException(ControllerException e) {
+    public ResponseEntity<HttpResponse> handleException(ControllerException e) {
         String message = String.format("%s %s", LocalDateTime.now(), e.getMessage());
-        Response response = new Response(Map.of("message", message));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        HttpResponse httpResponse = new HttpResponse();
+        httpResponse.setStatus("error");
+        httpResponse.setMessage(message);
+        return new ResponseEntity<>(httpResponse, HttpStatus.OK);
     }
 }

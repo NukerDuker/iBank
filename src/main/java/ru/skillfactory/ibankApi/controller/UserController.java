@@ -5,15 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.skillfactory.ibankApi.requestModels.ChangeBalanceRequest;
 import ru.skillfactory.ibankApi.requestModels.GetOperationsRequest;
-import ru.skillfactory.ibankApi.entity.Operations;
 import ru.skillfactory.ibankApi.entity.User;
 import ru.skillfactory.ibankApi.exceptions.ControllerException;
-import ru.skillfactory.ibankApi.exceptions.Response;
+import ru.skillfactory.ibankApi.exceptions.HttpResponse;
 import ru.skillfactory.ibankApi.service.OperationsService;
 import ru.skillfactory.ibankApi.service.UserService;
 
 import java.text.ParseException;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -31,16 +29,16 @@ public class UserController {
     }
 
     @PostMapping("/deposit")
-    public Response putMoney(@RequestBody ChangeBalanceRequest income) throws ControllerException {
+    public HttpResponse putMoney(@RequestBody ChangeBalanceRequest income) throws ControllerException {
         return userService.putMoney((long) income.getUserId(),(long) income.getValue());
     }
     @PostMapping("/withdrew")
-    public Response takeMoney(@RequestBody ChangeBalanceRequest spend) throws ControllerException {
+    public HttpResponse takeMoney(@RequestBody ChangeBalanceRequest spend) throws ControllerException {
         return userService.takeMoney((long) spend.getUserId(),(long) spend.getValue());
     }
 
     @PostMapping("/getOperationList")
-    public Response getOperations(@RequestBody GetOperationsRequest request) throws ParseException {
+    public HttpResponse getOperations(@RequestBody GetOperationsRequest request) throws ParseException {
         log.info(request.toString());
         return operationsService.getOperationList(request);
     }

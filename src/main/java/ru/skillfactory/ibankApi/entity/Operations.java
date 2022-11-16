@@ -1,5 +1,6 @@
 package ru.skillfactory.ibankApi.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Generated;
