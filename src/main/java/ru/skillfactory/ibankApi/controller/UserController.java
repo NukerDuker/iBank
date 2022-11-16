@@ -3,11 +3,12 @@ package ru.skillfactory.ibankApi.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.skillfactory.ibankApi.jsonResponse.JsonResponse;
 import ru.skillfactory.ibankApi.requestModels.ChangeBalanceRequest;
 import ru.skillfactory.ibankApi.requestModels.GetOperationsRequest;
 import ru.skillfactory.ibankApi.entity.User;
 import ru.skillfactory.ibankApi.exceptions.ControllerException;
-import ru.skillfactory.ibankApi.exceptions.HttpResponse;
+import ru.skillfactory.ibankApi.jsonResponse.HttpResponse;
 import ru.skillfactory.ibankApi.service.OperationsService;
 import ru.skillfactory.ibankApi.service.UserService;
 
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/getOperationList")
-    public HttpResponse getOperations(@RequestBody GetOperationsRequest request) throws ParseException {
+    public JsonResponse getOperations(@RequestBody GetOperationsRequest request) throws ParseException {
         log.info(request.toString());
         return operationsService.getOperationList(request);
     }

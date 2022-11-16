@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.skillfactory.ibankApi.entity.Operations;
 import ru.skillfactory.ibankApi.entity.User;
 import ru.skillfactory.ibankApi.exceptions.ControllerException;
-import ru.skillfactory.ibankApi.exceptions.HttpResponse;
+import ru.skillfactory.ibankApi.jsonResponse.HttpResponse;
 import ru.skillfactory.ibankApi.repository.OperationsRepository;
 import ru.skillfactory.ibankApi.repository.UserRepository;
 

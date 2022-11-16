@@ -5,16 +5,16 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.skillfactory.ibankApi.entity.Operations;
-import ru.skillfactory.ibankApi.exceptions.HttpResponse;
+import ru.skillfactory.ibankApi.jsonResponse.HttpResponse;
+import ru.skillfactory.ibankApi.jsonResponse.JsonResponse;
+import ru.skillfactory.ibankApi.jsonResponse.OperationsList;
 import ru.skillfactory.ibankApi.repository.OperationsRepository;
 import ru.skillfactory.ibankApi.requestModels.GetOperationsRequest;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Data
@@ -25,7 +25,7 @@ public class OperationsService {
 
     DateFormat formatter = new SimpleDateFormat("d-MM-yyyy");
 
-    public HttpResponse getOperationList(GetOperationsRequest request) throws ParseException {
+    public JsonResponse getOperationList(GetOperationsRequest request) throws ParseException {
         List<Operations> operations;
         ObjectMapper mapper = new ObjectMapper();
             boolean check = request.getEndDate() == null;
@@ -42,15 +42,17 @@ public class OperationsService {
                 operations = operationsRepository.findAllByUserIdAndDateBetween(request.getUserId(), request.getStartDate(), request.getEndDate());
             }
         HttpResponse httpResponse = new HttpResponse();
+        OperationsList operationsList = new OperationsList();
         if (operations.isEmpty()) {
             httpResponse.setStatus("success");
             httpResponse.setMessage("Operations not found");
             return httpResponse;
         }
-            httpResponse.setStatus("success");
-            httpResponse.setMessage(operations);
-            return httpResponse;
-
+        httpResponse.setStatus("success");
+        httpResponse.setMessage(operations);
+        operationsList.setOperationsList(operations);
+//            return httpResponse;
+        return operationsList;
 
     }
 

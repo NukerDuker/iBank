@@ -3,9 +3,9 @@ package ru.skillfactory.ibankApi.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import ru.skillfactory.ibankApi.jsonResponse.HttpResponse;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @ControllerAdvice
 public class ExceptionHandler {
