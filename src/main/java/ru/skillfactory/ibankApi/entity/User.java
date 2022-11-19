@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name="user_tab")
+@Table(name="USER_TAB")
 public class User {
 
     @Id

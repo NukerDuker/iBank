@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "operations_tab")
+@Table(name = "OPERATIONS_TAB")
 public class Operations {
 
     @Column
