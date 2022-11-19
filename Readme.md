@@ -1,4 +1,7 @@
 # Readme
+
+## Run docker postgres db
+docker run --rm --name ibankApiDB -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=ibank -e PGDATA=/var/lib/postgresql/data/pgdata postgres:14
 ## To start the application:
 1. Clone repository
 2. Build jar
