@@ -7,7 +7,7 @@ plugins {
 jar {
 	manifest {
 		attributes(
-				'Main-class': 'ru.skillfactory.ibankApi.iBankApiApplication'
+				'Main-class': 'ru.skillfactory.ibankApi.IBankApiApplication'
 		)
 	}
 }
