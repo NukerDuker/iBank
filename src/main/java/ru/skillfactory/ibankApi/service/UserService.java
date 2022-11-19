@@ -12,6 +12,7 @@ import ru.skillfactory.ibankApi.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,8 +27,17 @@ public class UserService {
     @Autowired
     private OperationsRepository operationsRepository;
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public HttpResponse saveUser(User user) {
+        HttpResponse response = new HttpResponse();
+        User usr = userRepository.save(user);
+        if (userRepository.findById(usr.getId()).isPresent()) {
+            response.setStatus("success");
+            response.setMessage(usr.toString());
+        } else {
+            response.setStatus("error");
+            response.setMessage("something went wrong");
+        }
+        return response;
     }
 
     public User getUserById(Long id) {
