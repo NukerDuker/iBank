@@ -3,6 +3,8 @@ package ru.skillfactory.ibankApi.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.skillfactory.ibankApi.dto.User2UserDtoConverter;
+import ru.skillfactory.ibankApi.dto.UserDto;
 import ru.skillfactory.ibankApi.jsonResponse.JsonResponse;
 import ru.skillfactory.ibankApi.requestModels.ChangeBalanceRequest;
 import ru.skillfactory.ibankApi.requestModels.GetOperationsRequest;
@@ -25,8 +27,10 @@ public class UserController {
     private final OperationsService operationsService;
 
     @GetMapping("/getBalance/{userId}")
-    public User getBalance(@PathVariable Long userId) {
-        return userService.getUserById(userId);
+    public UserDto getBalance(@PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        User2UserDtoConverter converter = new User2UserDtoConverter();
+        return converter.convertUserToUserDto(user);
     }
 
     @PostMapping("/deposit")
