@@ -1,3 +1,5 @@
 spring:
   config:
-    import: optional:file:./additional.properties
+    activate:
+      on-profile: prod
+    import: optional:file:projects/config/additional.properties
