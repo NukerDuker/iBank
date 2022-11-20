@@ -10,9 +10,12 @@ docker run --rm -dit --name ibankApiDB -p 5433:5432 -e POSTGRES_USER=postgres -e
 
 ## Build docker image 
 docker build ibankapi .
-docker run --rm -ti -e JAVA_OPTS="-Xms50M -Xmx100M" ibankapi
+sudo docker run --rm -ti -p 8081:8080 ibankapi
 
 ## To build and start app
 gradle --debug build -Ptarget=build/classes/main
 ![DB structure](https://user-images.githubusercontent.com/64738590/200120972-8eeee6d8-11a9-4e9b-9a0b-440a7bb33bad.png)  
 Dump in plain_dump.sql
+
+
+[//]: # (todo поменять расположение конф файла в настройках докера)
