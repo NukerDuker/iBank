@@ -16,10 +16,10 @@ docker run --rm -dit --name ibankApiDB -p 5433:5432 -e POSTGRES_USER=postgres -e
 4. Execute jar
 
 ## Build docker image 
-Additional properties can be uploaded in the image, you can specify directory to bootstrap file in Dockerfile.
-Commands: 
-docker build ibankapi .
-sudo docker run --rm -p 8080:8080 ibankapi
+Additional properties can be uploaded in the image, you can specify directory to bootstrap file in Dockerfile.   
+Commands:   
+`docker build ibankapi .`   
+`sudo docker run --rm -p 8080:8080 ibankapi`  
 
 ## Simple some-kind-of-documentation
 Deployed here: http://109.196.164.34:8080
