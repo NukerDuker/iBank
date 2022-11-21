@@ -10,7 +10,7 @@ docker run --rm -dit --name ibankApiDB -p 5433:5432 -e POSTGRES_USER=postgres -e
 
 ## Build docker image 
 docker build ibankapi .
-sudo docker run --rm -p 8081:8080 ibankapi
+sudo docker run --rm -p 8080:8080 ibankapi
 
 ## To build and start app
 gradle --debug build -Ptarget=build/classes/main

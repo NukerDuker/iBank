@@ -25,9 +25,9 @@ public class DevController {
         user1.setLastName("Kick");
         user1.setBalance(0L);
         User user2 = new User();
-        user2.setFirstName("Nick");
-        user2.setLastName("Kick");
-        user2.setBalance(0L);
+        user2.setFirstName("Gordey");
+        user2.setLastName("Ivanov");
+        user2.setBalance(999999L);
         HttpResponse httpResponse = userService.saveUser(user1);
         HttpResponse httpResponse1 = userService.saveUser(user2);
         if (httpResponse.getStatus().equals("error")) {
@@ -36,7 +36,7 @@ public class DevController {
             return httpResponse1;
         } else {
             httpresp.setStatus("success");
-            httpresp.setMessage("Users saved");
+            httpresp.setMessage("Users saved, use id: " + user1.getId() + ", " + user2.getId());
             return httpresp;
         }
     }
