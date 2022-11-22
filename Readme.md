@@ -66,4 +66,5 @@ Endpoints:
 2. Operations recording to operations_tab
 3. Transfer money operation
 4. Used Transactional annotation for transaction management
+5. Unit and integration tests
 5. Deployed on VDS
